@@ -65,6 +65,7 @@ export default class RNnavBar extends PureComponent {
 const styles = StyleSheet.create({
   contaniner: {
     width: Dimensions.get('window').width,
+    zIndex: 99
   },
   navContainer: {
     paddingHorizontal: 0,

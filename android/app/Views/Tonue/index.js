@@ -22,6 +22,7 @@ export default class Toune extends BaseView {
   jumpToPage = (page, params) => {
     console.log(page);
     const { navigate } = this.props.navigation;
+    console.log(params, 'params');
     navigate(`${page}`, params);
   }
 
@@ -57,7 +58,7 @@ export default class Toune extends BaseView {
             <TouchableOpacity
               key={index}
               style={styles.box}
-              onPress={() => { this.jumpToPage(item.detail, item.params) }}
+              onPress={() => { this.jumpToPage(item.nextPage, item.params) }}
             >
               <Text>{item.name}</Text>
             </TouchableOpacity>

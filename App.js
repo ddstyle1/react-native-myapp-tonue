@@ -10,7 +10,7 @@ import * as React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from "@react-navigation/stack";
-import Screen from './android/app/routes/test1';
+import TouneStackScreen from './android/app/routes/test1';
 // import Ionicons from "react-native-vector-icons/Ionicons";
 import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
 import ProgressDemo from './android/app/Views/Tonue/progressDemo';
@@ -65,21 +65,18 @@ const TabBar = ({ navigation, descriptors, state }) => {
 // 后续根据需求新增tab
 const BottomTab = createBottomTabNavigator();
 const App = () => {
-  const { TouneStackScreen } = Screen;
   return (
-    <NavigationContainer>
-      <BottomTab.Navigator
-        screenOptions={() => ({
-          tabBarActiveTintColor: '#FF8E4A',
-          tabBarInactiveTintColor: '#666666',
-          headerShown: false // 不展示标题栏
-        })}
-        tabBar={(props) => <TabBar {...props} />}
-      >
-        <BottomTab.Screen name='Toune' component={TouneStackScreen} />
-        <BottomTab.Screen name='Views' component={TouneStackScreen} />
-      </BottomTab.Navigator>
-    </NavigationContainer >
+    <BottomTab.Navigator
+      screenOptions={() => ({
+        tabBarActiveTintColor: '#FF8E4A',
+        tabBarInactiveTintColor: '#666666',
+        headerShown: false // 不展示标题栏
+      })}
+      tabBar={(props) => <TabBar {...props} />}
+    >
+      <BottomTab.Screen name='Toune' component={TouneStackScreen} />
+      {/* <BottomTab.Screen name='Views' component={TouneStackScreen} /> */}
+    </BottomTab.Navigator>
   )
 }
 
@@ -88,7 +85,10 @@ const Stack = createStackNavigator();
 const Appv2 = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={() => ({
+          headerShown: false // 不展示标题栏
+        })}>
         <Stack.Screen name='mainRoute' component={App} />
         <Stack.Screen name='ProgressDemo' component={ProgressDemo} />
       </Stack.Navigator>
@@ -108,4 +108,4 @@ const Styles = StyleSheet.create({
     alignItems: 'center'
   }
 })
-export default App;
+export default Appv2;

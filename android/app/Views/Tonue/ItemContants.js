@@ -1,12 +1,16 @@
 const TouneItems = [
   {
     name: '进度条组件',
-    detail: 'ProgressDemo',
-    params: {},
+    nextPage: 'ProgressDemo',
+    params: { tonue: 'ProgressDemo' },
   }, {
     name: '轮播图组件',
-    detail: '',
-    params: {},
+    nextPage: '',
+    params: { tonue: '' },
+  }, {
+    name: '滑动日历组件',
+    nextPage: 'DatePickerDemo',
+    params: { tonue: 'DatePickerDemo' },
   }
 ]
 

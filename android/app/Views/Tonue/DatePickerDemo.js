@@ -25,21 +25,10 @@ export default class DatePickerDemo extends BaseView {
     const TouneName = route.params['tonue'];
   }
 
-  jumpToPage = (page, params) => {
-    // const { navigation } = this.props
-    // navigate(`${page}`, params);
-  }
-
   renderContent() {
     return (
-      <View style={{ flex: 1, marginHorizontal: 12 }}>
-
-        <DatePicker
-          calendarWidth={336}
-          Height={HEADER_HEIGHT + CALENDAR_HEIGHT}
-          CALENDAR_HEIGHT={CALENDAR_HEIGHT}
-          HEADER_HEIGHT={HEADER_HEIGHT}
-        />
+      <View style={{ flex: 1, }}>
+        <DatePicker/>
       </View>
     )
   }

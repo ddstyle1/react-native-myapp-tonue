@@ -11,6 +11,10 @@ const TouneItems = [
     name: '滑动日历组件',
     nextPage: 'DatePickerDemo',
     params: { tonue: 'DatePickerDemo' },
+  },{
+    name:'受控/半受控组件',
+    nextPage:'SemiComponentsDemo',
+    params: { tonue: 'SemiComponentsDemo' },
   }
 ]
 

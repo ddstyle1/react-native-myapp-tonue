@@ -3,8 +3,9 @@ import { Text, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 import BaseView from '../BaseView';
 import System from '../../utils/System';
 import TouneItems from './ItemContants';
-
+import LocalStorage from '../../utils/LocalStorage'
 const px2dp = (val) => System.px2dp(val)
+import { DeviceEventEmitter } from 'react-native';
 
 
 
@@ -20,35 +21,18 @@ export default class Toune extends BaseView {
   }
 
   jumpToPage = (page, params) => {
-    console.log(page);
     const { navigate } = this.props.navigation;
-    console.log(params, 'params');
     navigate(`${page}`, params);
   }
 
-  // renderNavLeft() {
-  //   const steps = [
-  //     {
-  //       name: '选择商品',
-  //       key: 'chooseItem',
-  //     }, {
-  //       name: '商品信息',
-  //       key: 'itemInfo',
-  //     }, {
-  //       name: '顾客信息',
-  //       key: 'userInfo',
-  //     },
-  //     {
-  //       name: '提交成功',
-  //       key: 'submit',
-  //     },
-  //   ];
-  //   return (
-  //     <View style={{ marginLeft: 50 }}>
-  //       <ProgressStep steps={steps} currentStepID={2} />
-  //     </View>
-  //   )
-  // }
+  loginout=()=>{
+    console.log('退出');
+    LocalStorage.removeItem('cookie')
+    LocalStorage.getItem('cookie').then((ret)=>{
+      DeviceEventEmitter.emit('dd',ret)
+    });
+    
+  }
 
   renderContent() {
     return (
@@ -63,6 +47,9 @@ export default class Toune extends BaseView {
               <Text>{item.name}</Text>
             </TouchableOpacity>
           )}
+          <TouchableOpacity style={[styles.btn,{width:200},{marginTop:200}]} onPress={()=>{this.loginout()}}>
+            <Text style={{color:'#fff'}}>退出</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView >
     )
@@ -82,5 +69,14 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 8,
     marginTop: 10,
-  }
+  },
+  btn:{
+    height:35,
+    backgroundColor:'#4d796e',
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius: 10,
+    borderWidth:1,
+    borderColor:'#ffffff',
+  },
 })

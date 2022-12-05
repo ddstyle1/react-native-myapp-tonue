@@ -13,21 +13,32 @@ export default class ProgressStep extends Component {
     steps: PropTypes.array,
     currentStepID: PropTypes.string,
     currentStepKey: PropTypes.string,
+    
   }
 
   static defaultProps = {
     style: {},
     circleStyle: {},
     steps: [],
-    currentStepID: 0,
+    currentStepID: '0',
     currentStepKey: '',
   }
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      itemHeight:0,
+      itemWidth:0,
+    };
   }
 
+  getContainerSize = (e)=>{
+    console.log(e.nativeEvent.layout.height,e.nativeEvent.layout.width);
+    this.setState({
+      itemHeight: e.nativeEvent.layout.height,
+      itemWidth: e.nativeEvent.layout.width,
+    });
+  }
   renderLine() {
     return (
       <Text style={styles.dashItemHorizontal}></Text>
@@ -36,19 +47,40 @@ export default class ProgressStep extends Component {
 
   render() {
     const { style, steps, currentStepID, circleStyle } = this.props;
-    console.log(steps, 'steps=====');
+    const { itemWidth } = this.state;
+    // 配置进度数目
+    const progress = steps.length;
+    let circleHeight = 24;
+    // 检测外部是否传了circleStyle
+    if( Object.getOwnPropertyNames(circleStyle).length!==0 ){
+      circleHeight = circleStyle.height;
+    }
     return (
       <View style={[styles.contaniner, style]}>
         {steps.map((v, index) => {
           return (
             <>
-              <View style={{ alignItems: 'center' }} key={index}>
+              <View 
+                style={{ justifyContent:'center', alignItems: 'center',flex:1 }} 
+                key={index}
+                onLayout={(event) => this.getContainerSize(event)}
+              >
                 <View style={{ flexDirection: 'row' }}>
-                  <View style={[styles.circle, circleStyle, index <= currentStepID ? styles.solid : styles.noSolid]}></View>
+                  <Text style={[styles.dashItemHorizontal,{width:(itemWidth-circleHeight)/2,marginTop:circleHeight/2},index===0?{backgroundColor:'transparent'}:{backgroundColor:'#DEE2ED'}]}/> 
+                  <View style={[styles.circle, circleStyle, index <= currentStepID ? styles.solid : styles.noSolid]}>
+                    <Text 
+                      style={
+                        index <= currentStepID?
+                        {...styles.orangenumtxt,lineHeight:circleHeight-6}:{...styles.graynumtxt,lineHeight:circleHeight-5}
+                      }
+                    >
+                      {index+1>9?index+1:'0'+String(index+1)}
+                    </Text>
+                  </View>
+                  <Text style={[styles.dashItemHorizontal,{width:(itemWidth-circleHeight)/2,marginTop:circleHeight/2},index===progress-1?{backgroundColor:'transparent'}:{backgroundColor:'#DEE2ED'}]}/>                         
                 </View>
-                <Text >{v?.name}</Text>
+                <Text style={index <= currentStepID?styles.orangeTxt:styles.grayTxt}>{v?.name}</Text>
               </View>
-              {index !== steps.length - 1 ? this.renderLine() : null}
             </>
           )
         })}
@@ -59,9 +91,9 @@ export default class ProgressStep extends Component {
 
 const styles = StyleSheet.create({
   contaniner: {
-    width: 330,
     height: 30,
     flexDirection: 'row',
+    display:'flex',
   },
   circle: {
     height: 24,
@@ -69,19 +101,33 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   solid: {
-    backgroundColor: 'orange',
-    borderWidth: 1,
-    borderColor: '#fff',
+    backgroundColor: '#FF8E4A',
+    borderWidth: 3,
+    borderColor: 'rgba(255, 142, 74, 0.2)',
   },
   noSolid: {
-    backgroundColor: '#FFF',
-    borderWidth: 0.5,
-    borderColor: '#999',
+    borderWidth: 3,
+    borderColor:'transparent',
+    backgroundColor: 'rgba(222, 226, 237, 1)',
   },
   dashItemHorizontal: {
-    width: 18,
-    height: 1,
-    marginTop: 12,
-    backgroundColor: '#ccc',
+    height: 2,
+    // backgroundColor: '#ccc',
+  },
+  orangenumtxt:{
+    fontSize:11.25,
+    textAlign:'center',
+    color:'#FFFFFF'
+  },
+  graynumtxt:{
+    fontSize:11,
+    textAlign:'center',
+    color:'#888888'
+  },
+  orangeTxt:{
+    color:'#FF8E4A'
+  },
+  grayTxt:{
+    color:'#BBBBBB',
   }
 })

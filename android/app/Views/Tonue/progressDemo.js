@@ -19,31 +19,31 @@ export default class ProgressDemo extends BaseView {
     }
   }
 
-  jumpToPage = (page, params) => {
-    // const { navigate } = this.props.navigation
-    // navigate(`${page}`, params);
-  }
-
   renderContent() {
     const steps = [
       {
-        name: '选择商品',
-        key: 'chooseItem',
+        name: 'progress1',
+        key: 'progress1',
       }, {
-        name: '商品信息',
-        key: 'itemInfo',
+        name: 'progress2',
+        key: 'progress2',
       }, {
-        name: '顾客信息',
-        key: 'userInfo',
+        name: 'progress3',
+        key: 'progress3',
       },
       {
-        name: '提交成功',
-        key: 'submit',
+        name: 'progress4',
+        key: 'progress4',
       },
     ];
+    
     return (
-      <View style={{ marginLeft: 50 }}>
-        <ProgressStep steps={steps} currentStepID={'1'} />
+      <View style={{marginTop:20}}>
+        <ProgressStep 
+          steps={steps} 
+          currentStepID={'2'} 
+          circleStyle = {{height:28,width:28,borderRadius:14}}
+        />
       </View>
     )
   }
